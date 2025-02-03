@@ -1,72 +1,84 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/25 20:15:07 by enchevri          #+#    #+#             */
-/*   Updated: 2025/01/25 23:29:30 by enchevri         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "./libft/libft.h"
 #include "./mlx/mlx.h"
+#include <math.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 typedef struct s_data
 {
+	void	*mlx;
+	void	*win;
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
+	int		width;
+	int		height;
+	float	scale;
 }			t_data;
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+int	close_window(int keycode, t_data *data)
 {
-	char	*dst;
+	if (keycode == 65307) // ESC key
+	{
+		mlx_destroy_window(data->mlx, data->win);
+		mlx_destroy_image(data->mlx, data->img);
+		mlx_destroy_display(data->mlx);
+		free(data->mlx);
+		exit(0);
+	}
+	return (0);
+}
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
+int	mouse_hook(int button, int x, int y, t_data *data)
+{
+	int	new_width;
+	int	new_height;
+	int	x_pos;
+	int	y_pos;
+
+	(void)x;
+	(void)y;
+	if (button == 4) // Scroll up
+		data->scale *= 1.1;
+	else if (button == 5) // Scroll down
+		data->scale /= 1.1;
+	// Clear the window
+	mlx_clear_window(data->mlx, data->win);
+	// Calculate new dimensions
+	new_width = data->width * data->scale;
+	new_height = data->height * data->scale;
+	// Center the image
+	x_pos = (800 - new_width) / 2;
+	y_pos = (600 - new_height) / 2;
+	// Draw the scaled image
+	mlx_put_image_to_window(data->mlx, data->win, data->img, x_pos, y_pos);
+	return (0);
 }
 
 int	main(void)
 {
-	void	*mlx;
-	void	*mlx_win;
-	t_data	img;
-	int		x_max;
-	int		y_max;
-	int		x;
-	int		y;
-	int		i;
+	t_data	data;
 
-	i = 0;
-	y_max = 1080;
-	x_max = 1920;
-	x = x_max / 2;
-	y = y_max / 2;
-	mlx = mlx_init();
-	if (!mlx)
-		return (EXIT_FAILURE);
-	mlx_win = mlx_new_window(mlx, 1920, 720, "Hello world!");
-	img.img = mlx_new_image(mlx, 1920, 720);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-			&img.endian);
-	while (i < x_max)
+	data.mlx = mlx_init();
+	data.win = mlx_new_window(data.mlx, 800, 600, "Resizable Image");
+	data.scale = 1.0;
+	// Load your image (replace "path_to_your_image.xpm" with your actual image path)
+	int width, height;
+	data.img = mlx_xpm_file_to_image(data.mlx, "cursor.xpm", &width,
+			&height);
+	if (!data.img)
 	{
-		if (x < x_max && y < y_max)
-		{
-			my_mlx_pixel_put(&img, x, y, 0x0000FF00);
-			mlx_put_image_to_window(mlx, mlx_win, img.img, x, y);
-			x++;
-			y++;
-			ft_printf("1\n");
-		}
-		ft_printf("%d : x= %d, y = %d\n", i, x, y);
-		i++;
+		fprintf(stderr, "Error loading image\n");
+		return (1);
 	}
-	mlx_loop(mlx);
-	return (EXIT_SUCCESS);
+	data.width = width;
+	data.height = height;
+	mlx_mouse_hook(data.win, mouse_hook, &data);
+	mlx_key_hook(data.win, close_window, &data);
+	// Initial draw
+	mlx_put_image_to_window(data.mlx, data.win, data.img, (800 - width) / 2,
+		(600 - height) / 2);
+	mlx_loop(data.mlx);
+	return (0);
 }
