@@ -1,8 +1,8 @@
 .PHONY: all clean fclean re print-
 
-CC = cc
-CFLAGS = -I $(INCLUDE_DIR) -I ./src/lib/libft/include -Wall -Wextra
-NAME = so_long
+CC		= cc
+CFLAGS	= -I $(INCLUDE_DIR) -I ./src/lib/libft/include -Wall -Wextra
+NAME	= so_long
 
 LIBFT_DIR	= src/lib/libft
 INCLUDE_DIR = src/include
@@ -11,7 +11,7 @@ PARSING_DIR = src/parsing/
 OBJ_DIR		= obj/
 
 PARSING_SRCS	=  parsing.c
-LIBFT = $(LIBFT_DIR)/libft.a
+LIBFT			= $(LIBFT_DIR)/libft.a
 
 
 SRCS =	$(addprefix $(PARSING_DIR), $(PARSING_SRCS))
@@ -23,6 +23,7 @@ all: $(NAME)
 
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
+	$(MAKE) -C $(LIBFT_DIR) clean
 
 $(NAME): $(LIBFT) $(OBJS)
 	$(CC) $(OBJS)  -o $(NAME) $(LIBFT)
