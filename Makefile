@@ -1,4 +1,4 @@
-.PHONY: all clean fclean re print-
+.PHONY: all clean fclean re print- libft
 
 CC		= cc
 CFLAGS	= -I $(INCLUDE_DIR) -I ./src/lib/libft/include -Wall -Wextra
@@ -21,9 +21,10 @@ DEPENDENCIES = $(OBJS:.o=.d)
 
 all: $(NAME)
 
-$(LIBFT):
+$(LIBFT): libft
+
+libft:
 	$(MAKE) -C $(LIBFT_DIR)
-	$(MAKE) -C $(LIBFT_DIR) clean
 
 $(NAME): $(LIBFT) $(OBJS)
 	$(CC) $(OBJS)  -o $(NAME) $(LIBFT)

@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:20:33 by enchevri          #+#    #+#             */
-/*   Updated: 2025/01/22 19:11:18 by enchevri         ###   ########.fr       */
+/*   Updated: 2025/02/04 21:23:43 by enchevri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,5 @@ char	*ft_strrchr(const char *str, int srch_char)
 		}
 		i--;
 	}
-	return (0);
+	return (NULL);
 }
