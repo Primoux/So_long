@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 10:49:24 by enchevri          #+#    #+#             */
-/*   Updated: 2025/01/24 17:38:41 by enchevri         ###   ########.fr       */
+/*   Updated: 2025/02/06 20:41:06 by enchevri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 
 void	*ft_calloc(size_t count, size_t size)
 {
-	void	*tab;
+    void	*ptr;
+    size_t	total_size;
 
-	tab = NULL;
-	if (count == 0 || size == 0)
-		tab = malloc(0);
-	else if (count > SIZE_MAX / size)
-		return (NULL);
-	else
-		tab = malloc(count * size);
-	if (tab == NULL)
-		return (NULL);
-	ft_bzero(tab, count * size);
-	return (tab);
+    if (count > 0 && size > SIZE_MAX / count)
+        return (NULL);
+        
+    total_size = count * size;
+    ptr = malloc(total_size);
+    if (ptr == NULL)
+        return (NULL);
+        
+    ft_bzero(ptr, total_size);
+    return (ptr);
 }

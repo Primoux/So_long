@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 22:19:58 by marvin            #+#    #+#             */
-/*   Updated: 2024/11/21 19:45:04 by enchevri         ###   ########.fr       */
+/*   Updated: 2025/02/06 21:04:58 by enchevri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,13 @@ static size_t	count_letters(char const *s, char c)
 	return (i);
 }
 
-static char	**free_tab(char **tab, size_t i)
+char	**free_tab(char **tab)
 {
-	while (i > 0)
-		free(tab[--i]);
+	size_t	i;
+
+	i = 0;
+	while (tab[i])
+		free(tab[i++]);
 	free(tab);
 	return (NULL);
 }
@@ -75,7 +78,7 @@ char	**ft_split(char const *s, char c)
 			s++;
 		tab[i] = ft_calloc(count_letters(s, c) + 1, sizeof(char));
 		if (tab[i] == NULL)
-			return (free_tab(tab, words));
+			return (free_tab(tab));
 		ft_strlcpy(tab[i], s, count_letters(s, c) + 1);
 		s += count_letters(s, c);
 		i++;

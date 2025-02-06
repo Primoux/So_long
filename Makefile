@@ -8,13 +8,16 @@ LIBFT_DIR	= src/lib/libft
 INCLUDE_DIR = src/include
 MLX_DIR		= src/lib/mlx/libmlx.a
 PARSING_DIR = src/parsing/
+UTILS_DIR	= src/utils/
 OBJ_DIR		= obj/
 
-PARSING_SRCS	=  parsing.c
-LIBFT			= $(LIBFT_DIR)/libft.a
+PARSING_SRCS	= 	parsing.c
+UTILS_SRCS		=	aff_map.c
+LIBFT			=	$(LIBFT_DIR)/libft.a
 
 
-SRCS =	$(addprefix $(PARSING_DIR), $(PARSING_SRCS))
+SRCS =		$(addprefix $(PARSING_DIR), $(PARSING_SRCS)) \
+			$(addprefix $(UTILS_DIR), $(UTILS_SRCS))
 
 OBJS = $(patsubst %.c,$(OBJ_DIR)%.o,$(SRCS))
 DEPENDENCIES = $(OBJS:.o=.d)
@@ -24,7 +27,7 @@ all: $(NAME)
 $(LIBFT): libft
 
 libft:
-	$(MAKE) -C $(LIBFT_DIR)
+	@$(MAKE) --silent -C $(LIBFT_DIR)
 
 $(NAME): $(LIBFT) $(OBJS)
 	$(CC) $(OBJS)  -o $(NAME) $(LIBFT)
@@ -38,11 +41,11 @@ $(OBJ_DIR)%.o: %.c
 
 clean:
 	rm -rf $(OBJ_DIR)
-	$(MAKE) -C $(LIBFT_DIR) clean
+	$(MAKE) --silent -C $(LIBFT_DIR) clean
 
 fclean: clean
 	rm -f $(NAME)
-	$(MAKE) -C $(LIBFT_DIR) fclean
+	$(MAKE) --silent -C $(LIBFT_DIR) fclean
 
 re: fclean all
 
