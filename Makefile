@@ -1,4 +1,4 @@
-.PHONY: all clean fclean re print- libft
+.PHONY: all clean fclean re print-
 
 CC		= cc
 CFLAGS	= -I $(INCLUDE_DIR) -I ./src/lib/libft/include -Wall -Wextra
@@ -11,7 +11,10 @@ PARSING_DIR = src/parsing/
 UTILS_DIR	= src/utils/
 OBJ_DIR		= obj/
 
-PARSING_SRCS	= 	parsing.c
+PARSING_SRCS	= 	parsing.c \
+					init_game.c \
+					check_map.c \
+					check_char.c
 UTILS_SRCS		=	aff_map.c
 LIBFT			=	$(LIBFT_DIR)/libft.a
 
@@ -27,7 +30,7 @@ all: $(NAME)
 $(LIBFT): libft
 
 libft:
-	@$(MAKE) --silent -C $(LIBFT_DIR)
+	@$(MAKE) -C $(LIBFT_DIR)
 
 $(NAME): $(LIBFT) $(OBJS)
 	$(CC) $(OBJS)  -o $(NAME) $(LIBFT)
@@ -41,11 +44,11 @@ $(OBJ_DIR)%.o: %.c
 
 clean:
 	rm -rf $(OBJ_DIR)
-	$(MAKE) --silent -C $(LIBFT_DIR) clean
+	@$(MAKE)  -C $(LIBFT_DIR) clean
 
 fclean: clean
 	rm -f $(NAME)
-	$(MAKE) --silent -C $(LIBFT_DIR) fclean
+	@$(MAKE)  -C $(LIBFT_DIR) fclean
 
 re: fclean all
 

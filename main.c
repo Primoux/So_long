@@ -1,4 +1,16 @@
-#include "./mlx/mlx.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: enchevri <enchevri@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/07 14:05:56 by enchevri          #+#    #+#             */
+/*   Updated: 2025/02/07 14:06:01 by enchevri         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "mlx.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -65,8 +77,7 @@ int	main(void)
 	data.scale = 1.0;
 	// Load your image (replace "path_to_your_image.xpm" with your actual image path)
 	int width, height;
-	data.img = mlx_xpm_file_to_image(data.mlx, "cursor.xpm", &width,
-			&height);
+	data.img = mlx_xpm_file_to_image(data.mlx, "cursor.xpm", &width, &height);
 	if (!data.img)
 	{
 		fprintf(stderr, "Error loading image\n");

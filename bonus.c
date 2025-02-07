@@ -6,9 +6,11 @@
 /*   By: enchevri <enchevri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 18:20:15 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/06 18:20:25 by enchevri         ###   ########.fr       */
+/*   Updated: 2025/02/07 14:02:50 by enchevri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 char	*get_keyboard(void)
 {
