@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   bonus.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 18:20:15 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/07 14:02:50 by enchevri         ###   ########.fr       */
+/*   Updated: 2025/02/11 22:17:06 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "so_long.h"
+#include <fcntl.h>
 
 char	*get_keyboard(void)
 {

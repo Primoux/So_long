@@ -1,56 +1,137 @@
-.PHONY: all clean fclean re print-
+#-------------------------------- VARIABLES --------------------------------#
 
-CC		= cc
-CFLAGS	= -I $(INCLUDE_DIR) -I ./src/lib/libft/include -Wall -Wextra
-NAME	= so_long
+NAME		= so_long
+CC		 	= cc
+CFLAGS		= -Wall -Wextra -Werror
+SHELL 		= /bin/bash
 
-LIBFT_DIR	= src/lib/libft
+#-------------------------------- DIRECTORIES --------------------------------#
+
+LIBFT_DIR   = src/lib/libft
+LIBMLX_DIR  = src/lib/mlx
 INCLUDE_DIR = src/include
-MLX_DIR		= src/lib/mlx/libmlx.a
 PARSING_DIR = src/parsing/
-UTILS_DIR	= src/utils/
-OBJ_DIR		= obj/
+INIT_DIR	= src/init/
+HANDLE_MLX_DIR = src/handle_mlx/
 
-PARSING_SRCS	= 	parsing.c \
-					init_game.c \
-					check_map.c \
-					check_char.c
+UTILS_DIR   = src/utils/
+OBJ_DIR	 	= obj/
+
+#-------------------------------- INCLUDES & FLAGS --------------------------------#
+
+INCLUDES    = -I$(INCLUDE_DIR) \
+			  -I./src/lib/libft/include \
+			  -I$(LIBMLX_DIR)
+
+LDFLAGS		= -L$(LIBMLX_DIR) -lmlx \
+			  -L/usr/lib -lXext -lX11 -lm
+
+#-------------------------------- SOURCE FILES --------------------------------#
+
+PARSING_SRCS	=	parsing.c check_map.c check_char.c player_pos.c 
+
+INIT_SRCS		=	init_game.c init_window.c
+
+HANDLE_MLX_SRCS =	mlx_destroy.c mlx_utils.c movement.c
+
 UTILS_SRCS		=	aff_map.c
-LIBFT			=	$(LIBFT_DIR)/libft.a
 
+SRCS =	$(addprefix $(PARSING_DIR), $(PARSING_SRCS)) \
+		$(addprefix $(INIT_DIR), $(INIT_SRCS)) \
+		$(addprefix $(HANDLE_MLX_DIR), $(HANDLE_MLX_SRCS)) \
+		$(addprefix $(UTILS_DIR), $(UTILS_SRCS))
 
-SRCS =		$(addprefix $(PARSING_DIR), $(PARSING_SRCS)) \
-			$(addprefix $(UTILS_DIR), $(UTILS_SRCS))
+#-------------------------------- OBJECTS --------------------------------------#
 
-OBJS = $(patsubst %.c,$(OBJ_DIR)%.o,$(SRCS))
-DEPENDENCIES = $(OBJS:.o=.d)
+OBJS			= $(patsubst %.c,$(OBJ_DIR)%.o,$(SRCS))
+DEPENDENCIES	= $(OBJS:.o=.d)
+
+#-------------------------------- LIBRARIES --------------------------------#
+
+LIBFT		= $(LIBFT_DIR)/libft.a
+MLX			= $(LIBMLX_DIR)/libmlx.a
+
+#-------------------------------- PROGRESS BAR --------------------------------#
+
+TOTAL_FILES := $(shell find $(SRCS) -type f -name "*.c" -newer $(NAME) 2>/dev/null | wc -l)
+ifeq ($(TOTAL_FILES),0)
+	TOTAL_FILES =	$(words $(SRCS))
+endif
+CURRENT_FILE := 0
+BAR_LENGTH := 50
+
+#-------------------------------- COLORS --------------------------------#
+
+# Define colors and style
+BLACK       := \033[38;2;0;0;0m
+RED         := \033[38;2;220;20;60m
+GREEN       := \033[38;2;46;139;87m
+BLUE        := \033[38;2;30;144;255m
+YELLOW      := \033[38;2;255;215;0m
+MAGENTA     := \033[38;2;186;85;211m
+CYAN        := \033[38;2;0;206;209m
+WHITE       := \033[38;2;255;255;255m
+ORANGE      := \033[38;2;255;140;0m
+PURPLE      := \033[38;2;147;112;219m
+RESET       := \033[0m
+BOLD        := \033[1m
+
+# Simplified progress bar function
+define draw_progress_bar
+	@printf "\r$(CYAN)$(BOLD)Compiling so_long: $(RESET)["
+	@n=$(CURRENT_FILE); \
+	total=$(TOTAL_FILES); \
+	pct=`expr $$n '*' 100 / $$total`; \
+	fill=`expr $$n '*' $(BAR_LENGTH) / $$total`; \
+	empty=`expr $(BAR_LENGTH) - $$fill`; \
+	printf "$(GREEN)%*s$(RESET)" $$fill "" | tr ' ' '='; \
+	printf "%*s" $$empty "" | tr ' ' ' '; \
+	printf "] $(BOLD)%3d%%$(RESET) (%d/%d)" $$pct $$n $$total; \
+	if [ $$n = $$total ]; then printf "\n"; fi
+endef
+
+#-------------------------------- RULES --------------------------------#
+
 
 all: $(NAME)
 
 $(LIBFT): libft
 
 libft:
-	@$(MAKE) -C $(LIBFT_DIR)
+	@$(MAKE) --silent -C $(LIBFT_DIR) 2>/dev/null
 
 $(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(OBJS)  -o $(NAME) $(LIBFT)
+	@printf "$(BLUE)$(BOLD)Linking objects...$(RESET)\n"
+	@$(CC) $(OBJS) -o $(NAME) $(LIBFT) $(LDFLAGS)
+	@printf "$(GREEN)$(BOLD)Build successful!$(RESET) Created $(BOLD)$(NAME)$(RESET)\n"
 
--include $(DEPENDENCIES)
 
+# Update compilation rule
 $(OBJ_DIR)%.o: %.c
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -MMD -MP -c $< -o $@ 
-
+	$(eval CURRENT_FILE=$(shell echo $$(($(CURRENT_FILE) + 1))))
+	$(call draw_progress_bar)
+	@$(CC) $(CFLAGS) $(INCLUDES) -MMD -MP -c $< -o $@
+	@if [ $(CURRENT_FILE) = $(TOTAL_FILES) ]; then echo; fi
 
 clean:
-	rm -rf $(OBJ_DIR)
-	@$(MAKE)  -C $(LIBFT_DIR) clean
+	@printf "$(BLUE)Cleaning object files from so_long...$(RESET)\n"
+	@rm -rf $(OBJ_DIR)
+	@$(MAKE) --silent -C $(LIBFT_DIR) clean
 
-fclean: clean
-	rm -f $(NAME)
-	@$(MAKE)  -C $(LIBFT_DIR) fclean
+fclean: 
+	@printf "$(BLUE)Removing executable from so_long...$(RESET)\n"
+	@rm -f $(NAME)
+	@$(MAKE) --silent -C $(LIBFT_DIR) fclean
+	@printf "$(BLUE)Cleaning object files from so_long...$(RESET)\n"
+	@rm -rf $(OBJ_DIR)
+	@printf "$(GREEN)Clean complete so_long!$(RESET)\n"
+
+-include $(DEPENDENCIES)
 
 re: fclean all
 
 print-%:
 	@echo $($(patsubst print-%,%,$@))
+
+.PHONY: all clean fclean re libft print-%
