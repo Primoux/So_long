@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 16:33:36 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/09 16:34:13 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/12 14:04:23 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	find_player_pos(t_game *game)
 
 void	find_exit_pos(t_game *game)
 {
-	size_t  y;
-	size_t  x;
+	size_t	y;
+	size_t	x;
 
 	y = 0;
 	while (y < game->count_line)

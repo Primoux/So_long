@@ -6,10 +6,11 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 14:05:56 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/11 22:24:36 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/12 18:43:09 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "mlx.h"
 #include "so_long.h"
 #include <X11/keysym.h>
@@ -25,36 +26,50 @@ void	init_collectible(t_game *game, int w, int h)
 			game->mlx.collect3, &w, &h);
 }
 
-int	init_mlx_resources(t_game *game)
+int	init_mlx_resources(t_game *game, t_mlx_data *mlx)
 {
 	int	w;
 	int	h;
+	int	window_width;
+	int	window_height;
 
-	game->mlx.mlx_ptr = mlx_init();
-	if (!game->mlx.mlx_ptr)
+	mlx->mlx_ptr = mlx_init();
+	if (!mlx->mlx_ptr)
 		return (1);
-	game->mlx.win_ptr = mlx_new_window(game->mlx.mlx_ptr, game->line_len
-			* game->mlx.pixel_size, game->count_line * game->mlx.pixel_size,
-			"So Long");
-	if (!game->mlx.win_ptr)
-		return (cleanup_mlx(&game->mlx, NULL));
-	game->mlx.wall = mlx_xpm_file_to_image(game->mlx.mlx_ptr, "./xpm/Wall.xpm",
-			&w, &h);
-	game->mlx.floor = mlx_xpm_file_to_image(game->mlx.mlx_ptr,
-			"./xpm/grass.xpm", &w, &h);
-	game->mlx.player = mlx_xpm_file_to_image(game->mlx.mlx_ptr,
-			"./xpm/Player.xpm", &w, &h);
-	game->mlx.exit = mlx_xpm_file_to_image(game->mlx.mlx_ptr,
-			"./xpm/Door_close.xpm", &w, &h);
+	// Get screen dimensions
+	mlx_get_screen_size(mlx->mlx_ptr, &mlx->screen_width, &mlx->screen_height);
+	// Calculate window dimensions
+	window_width = game->line_len * mlx->pixel_size;
+	window_height = game->count_line * mlx->pixel_size;
+	// Check if window fits screen
+	if (window_width > mlx->screen_width || window_height > mlx->screen_height)
+	{
+		ft_putstr_fd("Error\nMap too large for screen resolution\n", 2);
+		return (1);
+	}
+	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, window_width, window_height,
+			"So_Long");
+	if (!mlx->win_ptr)
+		return (cleanup_mlx(mlx, NULL));
+	mlx->wall = mlx_xpm_file_to_image(mlx->mlx_ptr, "./xpm/Wall.xpm", &w, &h);
+	mlx->floor = mlx_xpm_file_to_image(mlx->mlx_ptr, "./xpm/grass.xpm", &w, &h);
+	mlx->player = mlx_xpm_file_to_image(mlx->mlx_ptr, "./xpm/Player.xpm", &w,
+			&h);
+	mlx->exit = mlx_xpm_file_to_image(mlx->mlx_ptr, "./xpm/Door_close.xpm", &w,
+			&h);
 	init_collectible(game, w, h);
-	if (!game->mlx.wall || !game->mlx.floor || !game->mlx.player
-		|| !game->mlx.exit || !game->mlx.collect1 || !game->mlx.collect2
-		|| !game->mlx.collect3)
-		return (cleanup_mlx(&game->mlx, NULL));
+	if (!mlx->wall || !mlx->floor || !mlx->player || !mlx->exit
+		|| !mlx->collect1 || !mlx->collect2 || !mlx->collect3)
+		{
+			cleanup_mlx(mlx, NULL);
+			ft_putstr_fd("Error\nCan't charge sprites\n", 2);
+			free_tab(game->map);
+			exit(1);
+		}
 	return (0);
 }
 
-void	put_sprite(t_mlx_data *data, char c, int x, int y)
+void	put_sprite(t_mlx_data *data, char c, size_t x, size_t y)
 {
 	void	*sprite;
 	void	*collectibles[3];

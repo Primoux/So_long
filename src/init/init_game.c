@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 17:00:32 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/11 16:48:48 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/12 18:55:43 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,28 +43,28 @@ static int	read_map(t_game *game, size_t *i)
 	return (0);
 }
 
-int	create_map(t_game *game)
+char	**create_map(t_game *game)
 {
 	size_t	i;
+	char	**map;
 
 	i = 0;
 	game->line = ft_strdup("");
 	if (!game->line)
-		return (1);
-	game->fd = open(game->map_path, O_RDONLY);
+		return (NULL);
 	if (game->fd < 0)
-		return (1);
+		return (NULL);
 	if (read_map(game, &i) == 1)
-		return (1);
+		return (NULL);
 	if (check_map_errors(game, i) == 1)
-		return (1);
-	game->map = ft_split(game->line, '\n');
-	if (!game->map)
-		return (1);
+		return (NULL);
+	map = ft_split(game->line, '\n');
+	if (!map)
+		return (NULL);
 	game->count_line = i;
+	game->line_len = ft_strlen(map[0]);
 	free(game->line);
-	game->line_len = ft_strlen(game->map[0]);
-	return (0);
+	return (map);
 }
 
 int	init_map(t_game *game)
@@ -75,8 +75,11 @@ int	init_map(t_game *game)
 		ft_putstr_fd("Error\nCannot open file\n", 2);
 		return (1);
 	}
-	if (create_map(game) == 1)
+	game->map = create_map(game);
+	close(game->fd);
+	if (!game->map)
 	{
+		free_tab(game->map);
 		free(game->line);
 		return (1);
 	}
@@ -94,18 +97,27 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		ft_printf("Error\nInvalid number of arguments\n");
+		ft_putstr_fd("Error\nInvalid number of arguments\n", 2);
 		return (1);
 	}
 	ft_memset(&game, 0, sizeof(t_game));
 	game.map_path = argv[1];
-	if (init_map(&game) == 0)
+	if (check_argv(game.map_path) == 1)
 	{
-		if (init_window(&game) != 0)
-		{
-			free_tab(game.map);
-			return (1);
-		}
+		ft_putstr_fd("Error\nWrong arg\n", 2);
+		return (1);
+	}
+	if (init_map(&game) == 1)
+		return (1);
+	if (check_map_valid(&game) == 1)
+	{
+		free_tab(game.map);
+		return (1);
+	}
+	if (init_window(&game) != 0)
+	{
+		free_tab(game.map);
+		return (1);
 	}
 	return (0);
 }

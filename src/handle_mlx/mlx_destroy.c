@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 18:04:14 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/11 22:28:52 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/12 17:04:09 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@
 int	handle_destroy(t_game *game)
 {
 	cleanup_game(game);
+	free_tab(game->map);
 	exit(0);
 	return (0);
 }
+
 
 int	cleanup_mlx(t_mlx_data *data, void *img)
 {

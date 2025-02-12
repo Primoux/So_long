@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 20:29:18 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/09 15:10:19 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/12 18:45:14 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,5 @@ void	aff_map(t_game game)
 		ft_printf("%s\n", game.map[i]);
 		i++;
 	}
-	printf("\n");
+	ft_printf("\n");
 }

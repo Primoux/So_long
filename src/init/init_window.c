@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 16:35:41 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/11 22:28:39 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/12 19:04:26 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int	init_window(t_game *game)
 	game->mlx.collect3 = "./xpm/Pikmin_yellow.xpm";
 	game->move_count = 0;
 	game->mlx.pixel_size = 64;
-	if (init_mlx_resources(game) != 0)
+	if (init_mlx_resources(game, &game->mlx) != 0)
 	{
-		cleanup_images(game);
+		cleanup_mlx(&game->mlx, NULL);
 		return (1);
 	}
 	find_player_pos(game);

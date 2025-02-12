@@ -28,11 +28,12 @@ LDFLAGS		= -L$(LIBMLX_DIR) -lmlx \
 
 #-------------------------------- SOURCE FILES --------------------------------#
 
-PARSING_SRCS	=	parsing.c check_map.c check_char.c player_pos.c 
+PARSING_SRCS	=	parsing.c check_map.c check_char.c \
+					player_pos.c flood_fill.c check_argv.c
 
 INIT_SRCS		=	init_game.c init_window.c
 
-HANDLE_MLX_SRCS =	mlx_destroy.c mlx_utils.c movement.c
+HANDLE_MLX_SRCS =	mlx_destroy.c mlx_utils.c movement.c mlx_print_utils.c
 
 UTILS_SRCS		=	aff_map.c
 
@@ -52,6 +53,8 @@ LIBFT		= $(LIBFT_DIR)/libft.a
 MLX			= $(LIBMLX_DIR)/libmlx.a
 
 #-------------------------------- PROGRESS BAR --------------------------------#
+
+
 
 TOTAL_FILES := $(shell find $(SRCS) -type f -name "*.c" -newer $(NAME) 2>/dev/null | wc -l)
 ifeq ($(TOTAL_FILES),0)

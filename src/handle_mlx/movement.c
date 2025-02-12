@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 19:17:51 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/11 22:21:52 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/12 18:10:34 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "mlx.h"
 #include "so_long.h"
 #include <X11/keysym.h>
+#include <unistd.h>
 
 int	handle_input(int keysym, t_game *game)
 {
@@ -41,14 +42,16 @@ int	handle_input(int keysym, t_game *game)
 	if (check_collision(game, old_x, old_y) == 1)
 		return (0);
 	update_player_pos(game, old_x, old_y);
-	render_game(*game);
-	game->move_count++;
-	ft_printf("Move count :%d\n", game->move_count);
 	return (0);
 }
 
-int	check_collision(t_game *game, int old_x, int old_y)
+int	check_collision(t_game *game, size_t old_x, size_t old_y)
 {
+	int	w;
+	int	h;
+
+	(void)old_x;
+	(void)old_y;
 	if (game->map[game->player_y][game->player_x] == '1')
 	{
 		game->player_x = old_x;
@@ -59,9 +62,20 @@ int	check_collision(t_game *game, int old_x, int old_y)
 			&& game->player_y == game->exit_y);
 	if (game->map[game->player_y][game->player_x] == 'C')
 		game->char_count.c_count--;
+	if (game->char_count.c_count == 0)
+	{
+		mlx_destroy_image(game->mlx.mlx_ptr, game->mlx.exit);
+		game->mlx.exit = mlx_xpm_file_to_image(game->mlx.mlx_ptr,
+				"./xpm/Door_open.xpm", &w, &h);
+		if (!game->mlx.exit)
+		{
+			cleanup_game(game);
+			free_tab(game->map);
+			exit(1);
+		}
+	}
 	if (game->on_exit && game->char_count.c_count == 0)
 	{
-		
 		cleanup_game(game);
 		free_tab(game->map);
 		exit(0);
@@ -69,7 +83,7 @@ int	check_collision(t_game *game, int old_x, int old_y)
 	return (0);
 }
 
-void	update_player_pos(t_game *game, int old_x, int old_y)
+void	update_player_pos(t_game *game, size_t old_x, size_t old_y)
 {
 	if (game->map[old_y][old_x] == 'P')
 	{
@@ -81,4 +95,6 @@ void	update_player_pos(t_game *game, int old_x, int old_y)
 	game->map[game->player_y][game->player_x] = 'P';
 	put_sprite(&game->mlx, 'P', game->player_x * game->mlx.pixel_size,
 		game->player_y * game->mlx.pixel_size);
+	render_game(*game);
+	put_on_screen(game);
 }
