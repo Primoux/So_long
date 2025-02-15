@@ -2,12 +2,11 @@ WIDTH   = $(shell xdpyinfo | grep dimensions: | awk '{split($$2,a,"x"); print a[
 HEIGHT  = $(shell xdpyinfo | grep dimensions: | awk '{split($$2,a,"x"); print a[2]}')
 DEFINE  = -D WIDTH=$(WIDTH) -D HEIGHT=$(HEIGHT)
 
-DIMENSIONS	= $(shell xdpyinfo | grep dimensions: | awk '{print $$2}')
 #-------------------------------- VARIABLES --------------------------------#
 
 NAME		= so_long
 CC		 	= cc
-CFLAGS		= -Wall -Wextra -Werror -g3
+CFLAGS		= -Wall -Wextra -Werror
 SHELL 		= /bin/bash
 
 #-------------------------------- DIRECTORIES --------------------------------#
