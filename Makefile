@@ -26,6 +26,11 @@ INCLUDES    = -I$(INCLUDE_DIR) \
 LDFLAGS		= -L$(LIBMLX_DIR) -lmlx \
 			  -L/usr/lib -lXext -lX11 -lm
 
+#-------------------------------- LIBRARIES --------------------------------#
+
+LIBFT		= $(LIBFT_DIR)/libft.a
+MLX			= $(LIBMLX_DIR)/libmlx.a
+
 #-------------------------------- SOURCE FILES --------------------------------#
 
 PARSING_SRCS	=	parsing.c check_map.c check_char.c \
@@ -47,14 +52,7 @@ SRCS =	$(addprefix $(PARSING_DIR), $(PARSING_SRCS)) \
 OBJS			= $(patsubst %.c,$(OBJ_DIR)%.o,$(SRCS))
 DEPENDENCIES	= $(OBJS:.o=.d)
 
-#-------------------------------- LIBRARIES --------------------------------#
-
-LIBFT		= $(LIBFT_DIR)/libft.a
-MLX			= $(LIBMLX_DIR)/libmlx.a
-
 #-------------------------------- PROGRESS BAR --------------------------------#
-
-
 
 TOTAL_FILES := $(shell find $(SRCS) -type f -name "*.c" -newer $(NAME) 2>/dev/null | wc -l)
 ifeq ($(TOTAL_FILES),0)

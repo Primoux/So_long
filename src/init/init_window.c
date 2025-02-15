@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 16:35:41 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/12 19:04:26 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/13 19:13:25 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,16 @@ int	init_window(t_game *game)
 	game->mlx.pixel_size = 64;
 	if (init_mlx_resources(game, &game->mlx) != 0)
 	{
-		cleanup_mlx(&game->mlx, NULL);
-		return (1);
+		cleanup_game(game);
+		free_tab(game->map);
+		exit(1);
 	}
-	find_player_pos(game);
+	if (check_map_valid(game) == 1)
+	{
+		cleanup_game(game);
+		free_tab(game->map);
+		exit(1);
+	}
 	find_exit_pos(game);
 	render_game(*game);
 	mlx_hook(game->mlx.win_ptr, 2, 1L << 0, handle_input, game);

@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 13:36:15 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/12 15:36:30 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/13 17:51:10 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	put_on_screen(t_game *game)
 	char	*count_str;
 
 	game->move_count++;
+	ft_printf("Move count : %d\n", game->move_count);
 	count_str = ft_itoa(game->move_count);
 	if (!count_str)
 		return (1);

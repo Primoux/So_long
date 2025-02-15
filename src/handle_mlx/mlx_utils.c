@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 14:05:56 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/12 18:43:09 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/13 17:54:56 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,56 +16,55 @@
 #include <X11/keysym.h>
 #include <stdlib.h>
 
-void	init_collectible(t_game *game, int w, int h)
-{
-	game->mlx.collect1 = mlx_xpm_file_to_image(game->mlx.mlx_ptr,
-			game->mlx.collect1, &w, &h);
-	game->mlx.collect2 = mlx_xpm_file_to_image(game->mlx.mlx_ptr,
-			game->mlx.collect2, &w, &h);
-	game->mlx.collect3 = mlx_xpm_file_to_image(game->mlx.mlx_ptr,
-			game->mlx.collect3, &w, &h);
-}
-
-int	init_mlx_resources(t_game *game, t_mlx_data *mlx)
+static int	load_images(t_mlx_data *mlx, t_game *game)
 {
 	int	w;
 	int	h;
-	int	window_width;
-	int	window_height;
 
-	mlx->mlx_ptr = mlx_init();
-	if (!mlx->mlx_ptr)
-		return (1);
-	// Get screen dimensions
-	mlx_get_screen_size(mlx->mlx_ptr, &mlx->screen_width, &mlx->screen_height);
-	// Calculate window dimensions
-	window_width = game->line_len * mlx->pixel_size;
-	window_height = game->count_line * mlx->pixel_size;
-	// Check if window fits screen
-	if (window_width > mlx->screen_width || window_height > mlx->screen_height)
-	{
-		ft_putstr_fd("Error\nMap too large for screen resolution\n", 2);
-		return (1);
-	}
-	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, window_width, window_height,
-			"So_Long");
-	if (!mlx->win_ptr)
-		return (cleanup_mlx(mlx, NULL));
 	mlx->wall = mlx_xpm_file_to_image(mlx->mlx_ptr, "./xpm/Wall.xpm", &w, &h);
 	mlx->floor = mlx_xpm_file_to_image(mlx->mlx_ptr, "./xpm/grass.xpm", &w, &h);
 	mlx->player = mlx_xpm_file_to_image(mlx->mlx_ptr, "./xpm/Player.xpm", &w,
 			&h);
 	mlx->exit = mlx_xpm_file_to_image(mlx->mlx_ptr, "./xpm/Door_close.xpm", &w,
 			&h);
-	init_collectible(game, w, h);
+	game->mlx.collect1 = mlx_xpm_file_to_image(game->mlx.mlx_ptr,
+			game->mlx.collect1, &w, &h);
+	game->mlx.collect2 = mlx_xpm_file_to_image(game->mlx.mlx_ptr,
+			game->mlx.collect2, &w, &h);
+	game->mlx.collect3 = mlx_xpm_file_to_image(game->mlx.mlx_ptr,
+			game->mlx.collect3, &w, &h);
 	if (!mlx->wall || !mlx->floor || !mlx->player || !mlx->exit
 		|| !mlx->collect1 || !mlx->collect2 || !mlx->collect3)
-		{
-			cleanup_mlx(mlx, NULL);
-			ft_putstr_fd("Error\nCan't charge sprites\n", 2);
-			free_tab(game->map);
-			exit(1);
-		}
+		return (1);
+	return (0);
+}
+
+int	init_mlx_resources(t_game *game, t_mlx_data *mlx)
+{
+	int	win_wid;
+	int	win_hei;
+
+	mlx->mlx_ptr = mlx_init();
+	if (!mlx->mlx_ptr)
+		return (1);
+	mlx_get_screen_size(mlx->mlx_ptr, &mlx->screen_width, &mlx->screen_height);
+	win_wid = game->line_len * mlx->pixel_size;
+	win_hei = game->count_line * mlx->pixel_size;
+	if (win_wid > mlx->screen_width || win_hei > mlx->screen_height)
+	{
+		ft_putstr_fd("Error\nMap too large for screen resolution\n", 2);
+		return (1);
+	}
+	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, win_wid, win_hei, "So_Long");
+	if (!mlx->win_ptr)
+		return (cleanup_game(game));
+	if (load_images(mlx, game))
+	{
+		cleanup_game(game);
+		ft_putstr_fd("Error\nCan't charge sprites\n", 2);
+		free_tab(game->map);
+		exit(1);
+	}
 	return (0);
 }
 

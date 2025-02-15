@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 18:04:14 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/12 17:04:09 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/13 19:26:30 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,9 @@ int	handle_destroy(t_game *game)
 {
 	cleanup_game(game);
 	free_tab(game->map);
+	ft_printf("You exit the game whit the x\n");
 	exit(0);
 	return (0);
-}
-
-
-int	cleanup_mlx(t_mlx_data *data, void *img)
-{
-	if (img)
-		mlx_destroy_image(data->mlx_ptr, img);
-	if (data->win_ptr)
-		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	if (data->mlx_ptr)
-	{
-		mlx_destroy_display(data->mlx_ptr);
-		free(data->mlx_ptr);
-	}
-	return (1);
 }
 
 void	cleanup_images(t_game *game)
@@ -55,11 +41,13 @@ void	cleanup_images(t_game *game)
 		mlx_destroy_image(game->mlx.mlx_ptr, game->mlx.collect3);
 }
 
-void	cleanup_game(t_game *game)
+int	cleanup_game(t_game *game)
 {
 	cleanup_images(game);
 	if (game->mlx.win_ptr)
 		mlx_destroy_window(game->mlx.mlx_ptr, game->mlx.win_ptr);
-	mlx_destroy_display(game->mlx.mlx_ptr);
+	if (game->mlx.mlx_ptr)
+		mlx_destroy_display(game->mlx.mlx_ptr);
 	free(game->mlx.mlx_ptr);
+	return (0);
 }

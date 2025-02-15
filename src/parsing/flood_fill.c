@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:46:13 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/12 18:17:49 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/13 19:10:52 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	check_map_valid(t_game *game)
 	if (game->on_exit == FALSE
 		|| game->found_collectibles != game->char_count.c_count)
 	{
-		ft_putendl_fd("Error\nInvalid path", 2);
+		ft_putendl_fd("Error\nImpossible map", 2);
 		free_tab(map_copy);
 		return (1);
 	}
@@ -64,7 +64,7 @@ void	flood_fill(char **map, size_t y, size_t x, t_game *game)
 {
 	if (y < 0 || y >= game->count_line || x < 0 || x >= game->line_len)
 		return ;
-	if (map[y][x] == '1' || map[y][x] == '2')
+	if (map[y][x] == '1' || map[y][x] == 'X')
 		return ;
 	if (map[y][x] == 'E')
 	{
@@ -73,7 +73,8 @@ void	flood_fill(char **map, size_t y, size_t x, t_game *game)
 	}
 	if (map[y][x] == 'C')
 		game->found_collectibles++;
-	map[y][x] = '2';
+	map[y][x] = 'X';
+	aff_map(map);
 	flood_fill(map, y + 1, x, game);
 	flood_fill(map, y - 1, x, game);
 	flood_fill(map, y, x + 1, game);

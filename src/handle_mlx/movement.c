@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 19:17:51 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/12 18:10:34 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/13 18:13:01 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,8 @@
 #include <X11/keysym.h>
 #include <unistd.h>
 
-int	handle_input(int keysym, t_game *game)
+static int	process_movement(int keysym, t_game *game)
 {
-	int	old_x;
-	int	old_y;
-
-	old_x = game->player_x;
-	old_y = game->player_y;
 	if (keysym == XK_Escape)
 	{
 		cleanup_game(game);
@@ -39,19 +34,43 @@ int	handle_input(int keysym, t_game *game)
 		game->player_x++;
 	else
 		return (0);
+	return (1);
+}
+
+int	handle_input(int keysym, t_game *game)
+{
+	int	old_x;
+	int	old_y;
+
+	old_x = game->player_x;
+	old_y = game->player_y;
+	if (!process_movement(keysym, game))
+		return (0);
 	if (check_collision(game, old_x, old_y) == 1)
 		return (0);
 	update_player_pos(game, old_x, old_y);
 	return (0);
 }
 
-int	check_collision(t_game *game, size_t old_x, size_t old_y)
+static int	handle_exit_update(t_game *game)
 {
 	int	w;
 	int	h;
 
-	(void)old_x;
-	(void)old_y;
+	mlx_destroy_image(game->mlx.mlx_ptr, game->mlx.exit);
+	game->mlx.exit = mlx_xpm_file_to_image(game->mlx.mlx_ptr,
+			"./xpm/Door_open.xpm", &w, &h);
+	if (!game->mlx.exit)
+	{
+		cleanup_game(game);
+		free_tab(game->map);
+		exit(1);
+	}
+	return (0);
+}
+
+int	check_collision(t_game *game, size_t old_x, size_t old_y)
+{
 	if (game->map[game->player_y][game->player_x] == '1')
 	{
 		game->player_x = old_x;
@@ -63,17 +82,8 @@ int	check_collision(t_game *game, size_t old_x, size_t old_y)
 	if (game->map[game->player_y][game->player_x] == 'C')
 		game->char_count.c_count--;
 	if (game->char_count.c_count == 0)
-	{
-		mlx_destroy_image(game->mlx.mlx_ptr, game->mlx.exit);
-		game->mlx.exit = mlx_xpm_file_to_image(game->mlx.mlx_ptr,
-				"./xpm/Door_open.xpm", &w, &h);
-		if (!game->mlx.exit)
-		{
-			cleanup_game(game);
-			free_tab(game->map);
-			exit(1);
-		}
-	}
+		if (handle_exit_update(game))
+			return (1);
 	if (game->on_exit && game->char_count.c_count == 0)
 	{
 		cleanup_game(game);
