@@ -1,13 +1,15 @@
-WIDTH   = $(shell xrandr | grep current | awk '{print $$8}')
-HEIGHT  = $(shell xrandr | grep current | awk '{print $$10}' | sed --expression s/,/''/)
-DEFINE  = -D WIDTH=$(WIDTH) -D HEIGHT=$(HEIGHT)
-
 #-------------------------------- VARIABLES --------------------------------#
 
 NAME		= so_long
 CC		 	= cc
 CFLAGS		= -Wall -Wextra -Werror
 SHELL 		= /bin/bash
+
+#-------------------------------- DEFINE ----------------------------------#
+
+WIDTH   = $(shell xrandr | grep current | awk '{print $$8}')
+HEIGHT  = $(shell xrandr | grep current | awk '{print $$10}' | sed --expression s/,/''/)
+DEFINE  = -D WIDTH=$(WIDTH) -D HEIGHT=$(HEIGHT)
 
 #-------------------------------- DIRECTORIES --------------------------------#
 

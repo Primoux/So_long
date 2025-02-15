@@ -18,59 +18,31 @@ OBJ_DIR		= obj/
 
 #-------------------------------- SOURCE FILES --------------------------------#
 
-LIST_SRCS		=	ft_lstadd_front_bonus.c \
-					ft_lstlast_bonus.c \
-					ft_lstadd_back_bonus.c \
-					ft_lstsize_bonus.c \
-					ft_lstdelone_bonus.c \
-					ft_lstclear_bonus.c \
-					ft_lstiter_bonus.c \
-					ft_lstmap_bonus.c \
+LIST_SRCS		=	ft_lstadd_front_bonus.c ft_lstlast_bonus.c \
+					ft_lstadd_back_bonus.c ft_lstsize_bonus.c \
+					ft_lstdelone_bonus.c ft_lstclear_bonus.c \
+					ft_lstiter_bonus.c ft_lstmap_bonus.c \
 					ft_lstnew_bonus.c
 
-CHAR_SRCS		=	ft_isalpha.c \
-					ft_isdigit.c \
-					ft_isascii.c \
-					ft_isprint.c \
-					ft_isalnum.c \
-					ft_toupper.c \
+CHAR_SRCS		=	ft_isalpha.c ft_isdigit.c ft_isascii.c \
+					ft_isprint.c ft_isalnum.c ft_toupper.c \
 					ft_tolower.c 
 
-STRING_SRCS		=	ft_strlen.c \
-					ft_strchr.c \
-					ft_strrchr.c \
-					ft_strlcpy.c \
-					ft_strlcat.c \
-					ft_strnstr.c \
-					ft_strncmp.c \
-					ft_strjoin.c \
-					ft_str_free_to_join.c \
-					ft_strtrim.c \
-					ft_strmapi.c \
-					ft_striteri.c \
-					ft_strdup.c \
-					ft_substr.c 
+STRING_SRCS		=	ft_strlen.c ft_strchr.c ft_strrchr.c \
+					ft_strlcpy.c ft_strlcat.c ft_strnstr.c \
+					ft_strncmp.c ft_strjoin.c ft_str_free_to_join.c \
+					ft_strtrim.c ft_strmapi.c ft_striteri.c \
+					ft_strdup.c ft_substr.c 
 					
-IO_SRCS			=	ft_putchar_fd.c \
-					ft_putstr_fd.c \
-					ft_putendl_fd.c \
-					ft_putnbr_fd.c \
-					print_digit.c \
-					print_pointer.c 
+IO_SRCS			=	ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c \
+					ft_putnbr_fd.c print_digit.c print_pointer.c 
 
-MEMORY_SRCS		=	ft_memset.c \
-					ft_bzero.c \
-					ft_memcpy.c \
-					ft_memchr.c \
-					ft_memcmp.c \
-					ft_memmove.c \
+MEMORY_SRCS		=	ft_memset.c ft_bzero.c ft_memcpy.c \
+					ft_memchr.c ft_memcmp.c ft_memmove.c \
 					ft_calloc.c 
 
-ADVANCE_SRCS	=	ft_atoi.c \
-					ft_split.c \
-					ft_itoa.c \
-					get_next_line.c \
-					ft_printf.c 
+ADVANCE_SRCS	=	ft_atoi.c ft_split.c ft_itoa.c \
+					get_next_line.c ft_printf.c 
 
 SRCS		= $(addprefix $(LIST_DIR), $(LIST_SRCS)) \
 			  $(addprefix $(CHAR_DIR), $(CHAR_SRCS)) \
@@ -142,7 +114,8 @@ fclean: clean
 	@$(RM) $(NAME)
 	@printf "$(GREEN)Clean complete libft!$(RESET)\n"
 
-re: fclean all
+re: fclean
+	@$(MAKE) --silent all
 
 -include $(DEPENDENCIES)
 
