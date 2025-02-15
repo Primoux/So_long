@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 19:17:51 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/13 18:13:01 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/15 15:38:41 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int	check_collision(t_game *game, size_t old_x, size_t old_y)
 	{
 		cleanup_game(game);
 		free_tab(game->map);
+		ft_printf("You Finished the game in %d moves GG !\n", game->move_count);
 		exit(0);
 	}
 	return (0);

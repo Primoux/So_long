@@ -1,8 +1,13 @@
+WIDTH   = $(shell xdpyinfo | grep dimensions: | awk '{split($$2,a,"x"); print a[1]}')
+HEIGHT  = $(shell xdpyinfo | grep dimensions: | awk '{split($$2,a,"x"); print a[2]}')
+DEFINE  = -D WIDTH=$(WIDTH) -D HEIGHT=$(HEIGHT)
+
+DIMENSIONS	= $(shell xdpyinfo | grep dimensions: | awk '{print $$2}')
 #-------------------------------- VARIABLES --------------------------------#
 
 NAME		= so_long
 CC		 	= cc
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -g3
 SHELL 		= /bin/bash
 
 #-------------------------------- DIRECTORIES --------------------------------#
@@ -103,7 +108,7 @@ libft:
 
 $(NAME): $(LIBFT) $(OBJS)
 	@printf "$(BLUE)$(BOLD)Linking objects...$(RESET)\n"
-	@$(CC) $(OBJS) -o $(NAME) $(LIBFT) $(LDFLAGS)
+	@$(CC) $(OBJS) -o $(NAME)  $(LIBFT) $(LDFLAGS)
 	@printf "$(GREEN)$(BOLD)Build successful!$(RESET) Created $(BOLD)$(NAME)$(RESET)\n"
 
 
@@ -112,7 +117,7 @@ $(OBJ_DIR)%.o: %.c
 	@mkdir -p $(dir $@)
 	$(eval CURRENT_FILE=$(shell echo $$(($(CURRENT_FILE) + 1))))
 	$(call draw_progress_bar)
-	@$(CC) $(CFLAGS) $(INCLUDES) -MMD -MP -c $< -o $@
+	@$(CC) $(CFLAGS) $(DEFINE) $(INCLUDES) -MMD -MP -c $< -o $@
 	@if [ $(CURRENT_FILE) = $(TOTAL_FILES) ]; then echo; fi
 
 clean:

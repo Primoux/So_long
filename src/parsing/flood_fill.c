@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:46:13 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/13 19:10:52 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/15 15:36:49 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ void	flood_fill(char **map, size_t y, size_t x, t_game *game)
 	if (map[y][x] == 'C')
 		game->found_collectibles++;
 	map[y][x] = 'X';
-	aff_map(map);
 	flood_fill(map, y + 1, x, game);
 	flood_fill(map, y - 1, x, game);
 	flood_fill(map, y, x + 1, game);

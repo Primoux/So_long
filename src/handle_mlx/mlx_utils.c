@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 14:05:56 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/13 17:54:56 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/15 16:04:17 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,6 @@ int	init_mlx_resources(t_game *game, t_mlx_data *mlx)
 	mlx_get_screen_size(mlx->mlx_ptr, &mlx->screen_width, &mlx->screen_height);
 	win_wid = game->line_len * mlx->pixel_size;
 	win_hei = game->count_line * mlx->pixel_size;
-	if (win_wid > mlx->screen_width || win_hei > mlx->screen_height)
-	{
-		ft_putstr_fd("Error\nMap too large for screen resolution\n", 2);
-		return (1);
-	}
 	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, win_wid, win_hei, "So_Long");
 	if (!mlx->win_ptr)
 		return (cleanup_game(game));

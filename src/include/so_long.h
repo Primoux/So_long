@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 16:19:48 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/13 17:56:28 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/15 15:31:21 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@
 /*-------------------------------- DEFINES --------------------------------*/
 
 # define GOOD_CHAR "10CPE"
+# ifndef WIDTH
+#  define WIDTH 1280
+# endif
+# ifndef HEIGHT
+#  define HEIGHT 720
+# endif
 
 /*--------------------------------- ENUM ---------------------------------*/
 

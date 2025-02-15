@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 17:00:32 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/13 18:58:10 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/15 16:04:47 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,20 @@
 static int	check_map_errors(t_game *game, size_t i)
 {
 	if (i < 3 || game->line == NULL || game->line[ft_strlen(game->line)
-		- 1] == '\n' || ft_strnstr(game->line, "\n\n", ft_strlen(game->line)))
+			- 1] == '\n' || ft_strnstr(game->line,
+			"\n\n", ft_strlen(game->line)))
 		return (1);
 	return (0);
 }
 
-static int	read_map(t_game *game, size_t *i)
+static int	read_map(t_game *game, size_t *count_line)
 {
 	char	*line;
+	size_t	max_height;
+	size_t	max_width;
 
+	max_height = (HEIGHT - 128) / 64;
+	max_width = (WIDTH + 64) / 64;
 	line = get_next_line(game->fd);
 	while (line != NULL)
 	{
@@ -36,7 +41,12 @@ static int	read_map(t_game *game, size_t *i)
 			free(line);
 			return (1);
 		}
-		(*i)++;
+		(*count_line)++;
+		if (max_height < *count_line || max_width < ft_strlen(line))
+		{
+			ft_putstr_fd("Error\nMap too large for screen resolution\n", 2);
+			return (1);
+		}
 		free(line);
 		line = get_next_line(game->fd);
 	}
