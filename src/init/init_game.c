@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 17:00:32 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/15 16:04:47 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/15 17:27:49 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int	create_map(t_game *game)
 		return (1);
 	if (check_map_errors(game, i) == 1)
 		return (1);
+		
 	game->map = ft_split(game->line, '\n');
 	if (!game->map)
 		return (1);
@@ -115,6 +116,7 @@ int	main(int argc, char **argv)
 		ft_putstr_fd("Error\nMap error\n", 2);
 		return (1);
 	}
+	
 	init_window(&game);
 	return (0);
 }

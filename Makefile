@@ -1,5 +1,5 @@
-WIDTH   = $(shell xdpyinfo | grep dimensions: | awk '{split($$2,a,"x"); print a[1]}')
-HEIGHT  = $(shell xdpyinfo | grep dimensions: | awk '{split($$2,a,"x"); print a[2]}')
+WIDTH   = $(shell xrandr | grep current | awk '{print $$8}')
+HEIGHT  = $(shell xrandr | grep current | awk '{print $$10}' | sed --expression s/,/''/)
 DEFINE  = -D WIDTH=$(WIDTH) -D HEIGHT=$(HEIGHT)
 
 #-------------------------------- VARIABLES --------------------------------#
@@ -28,7 +28,7 @@ INCLUDES    = -I$(INCLUDE_DIR) \
 			  -I$(LIBMLX_DIR)
 
 LDFLAGS		= -L$(LIBMLX_DIR) -lmlx \
-			  -L/usr/lib -lXext -lX11 -lm
+			  -lXext -lX11 -lm
 
 #-------------------------------- LIBRARIES --------------------------------#
 
@@ -134,7 +134,8 @@ fclean:
 
 -include $(DEPENDENCIES)
 
-re: fclean all
+re: fclean
+	@$(MAKE) --silent all
 
 print-%:
 	@echo $($(patsubst print-%,%,$@))
