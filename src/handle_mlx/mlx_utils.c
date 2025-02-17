@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 14:05:56 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/15 16:04:17 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/16 17:10:00 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,24 +41,18 @@ static int	load_images(t_mlx_data *mlx, t_game *game)
 
 int	init_mlx_resources(t_game *game, t_mlx_data *mlx)
 {
-	int	win_wid;
-	int	win_hei;
-
 	mlx->mlx_ptr = mlx_init();
 	if (!mlx->mlx_ptr)
 		return (1);
-	mlx_get_screen_size(mlx->mlx_ptr, &mlx->screen_width, &mlx->screen_height);
-	win_wid = game->line_len * mlx->pixel_size;
-	win_hei = game->count_line * mlx->pixel_size;
-	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, win_wid, win_hei, "So_Long");
+	mlx->offset_x = (WIDTH - (game->line_len * mlx->pixel_size)) / 2;
+	mlx->offset_y = (HEIGHT - (game->count_line * mlx->pixel_size)) / 2;
+	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, WIDTH, HEIGHT, "So_Long");
 	if (!mlx->win_ptr)
-		return (cleanup_game(game));
+		return (1);
 	if (load_images(mlx, game))
 	{
-		cleanup_game(game);
-		ft_putstr_fd("Error\nCan't charge sprites\n", 2);
-		free_tab(game->map);
-		exit(1);
+		ft_putstr_fd("Error\nDon't move the xpm files pls\n", 2);
+		return (1);
 	}
 	return (0);
 }
@@ -83,8 +77,9 @@ void	put_sprite(t_mlx_data *data, char c, size_t x, size_t y)
 		sprite = collectibles[(x + y) % 3];
 	else
 		return ;
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, sprite, x
-		* data->pixel_size, y * data->pixel_size);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, sprite,
+		data->offset_x + (x * data->pixel_size),
+		data->offset_y + (y * data->pixel_size));
 }
 
 void	render_game(t_game game)

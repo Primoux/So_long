@@ -1,7 +1,7 @@
 #-------------------------------- VARIABLES --------------------------------#
 NAME	= libft.a
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror 
 AR		= ar rcs
 RM		= rm -f
 SHELL	= /bin/bash
@@ -18,11 +18,11 @@ OBJ_DIR		= obj/
 
 #-------------------------------- SOURCE FILES --------------------------------#
 
-LIST_SRCS		=	ft_lstadd_front_bonus.c ft_lstlast_bonus.c \
-					ft_lstadd_back_bonus.c ft_lstsize_bonus.c \
-					ft_lstdelone_bonus.c ft_lstclear_bonus.c \
-					ft_lstiter_bonus.c ft_lstmap_bonus.c \
-					ft_lstnew_bonus.c
+LIST_SRCS		=	ft_lstadd_front.c ft_lstlast.c \
+					ft_lstadd_back.c ft_lstsize.c \
+					ft_lstdelone.c ft_lstclear.c \
+					ft_lstiter.c ft_lstmap.c \
+					ft_lstnew.c
 
 CHAR_SRCS		=	ft_isalpha.c ft_isdigit.c ft_isascii.c \
 					ft_isprint.c ft_isalnum.c ft_toupper.c \

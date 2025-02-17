@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 19:17:51 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/15 15:38:41 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/16 17:08:38 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ static int	handle_exit_update(t_game *game)
 	{
 		cleanup_game(game);
 		free_tab(game->map);
+		ft_putstr_fd("Error\nDon't move the xpm files pls\n", 2);
 		exit(1);
 	}
 	return (0);

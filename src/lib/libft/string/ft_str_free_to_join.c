@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_str_free_to_join.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 14:14:55 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/07 14:15:18 by enchevri         ###   ########.fr       */
+/*   Updated: 2025/02/16 14:45:44 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 

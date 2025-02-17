@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 16:19:48 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/15 15:31:21 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/16 17:09:02 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ typedef struct s_mlx_data
 	void			*collect1;
 	void			*collect2;
 	void			*collect3;
+	int				offset_x;
+	int				offset_y;
 	size_t			pixel_size;
 }					t_mlx_data;
 /// @brief Struct representing the count of every char inside the map
@@ -62,6 +64,7 @@ typedef struct s_char_count
 }					t_char_count;
 /// @brief Struct representing the game state, including map data,
 ///	player position, and rendering information.
+/// And there is 2 struct inside s_char_count and s_mlx_data
 typedef struct s_game
 {
 	char			*line;
@@ -88,7 +91,7 @@ typedef struct s_game
 ///	verifies the presence of valid characters,
 ///	and counts the number of elements to ensure there is one player,
 ///	one exit, and at least one collectible.
-///	@param t_game
+///	@param t_game Pointer to the game structure.
 /// @return Return 1 on error and 0 when the map is good
 int					parsing(t_game *game);
 int					check_walls_left_right(t_game *game);
