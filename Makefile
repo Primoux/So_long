@@ -2,7 +2,7 @@
 
 NAME		= so_long
 CC		 	= cc
-CFLAGS		= -Wall -Wextra -Werror -g3
+CFLAGS		= -Wall -Wextra -Werror
 SHELL 		= /bin/bash
 
 #-------------------------------- DEFINE ----------------------------------#
@@ -25,9 +25,9 @@ OBJ_DIR	 	= obj/
 
 #-------------------------------- INCLUDES & FLAGS --------------------------------#
 
-INCLUDES    = -I$(INCLUDE_DIR) \
-			  -I./src/lib/libft/include \
-			  -I$(LIBMLX_DIR)
+INCLUDES    = -I $(INCLUDE_DIR) \
+			  -I ./src/lib/libft/include \
+			  -I $(LIBMLX_DIR)
 
 LDFLAGS		= -L$(LIBMLX_DIR) -lmlx \
 			  -lXext -lX11 -lm

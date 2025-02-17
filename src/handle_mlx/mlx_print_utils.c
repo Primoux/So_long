@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 13:36:15 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/17 17:56:02 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/17 18:33:20 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ int	put_on_screen(t_game *game)
 	if (!count_str)
 		return (1);
 	mlx_string_put(game->mlx.mlx_ptr, game->mlx.win_ptr, game->mlx.offset_x,
-		game->mlx.offset_y, 0xFFFFFF, "Moves: ");
+		game->mlx.offset_y + 20, 0xFFFFFF, "Moves: ");
 	mlx_string_put(game->mlx.mlx_ptr, game->mlx.win_ptr, game->mlx.offset_x
-		+ 20, game->mlx.offset_y + 20, 0xFFFFFF, count_str);
+		+ 50, game->mlx.offset_y + 20, 0xFFFFFF, count_str);
 	free(count_str);
 	return (0);
 }

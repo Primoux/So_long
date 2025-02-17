@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 14:05:56 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/16 17:10:00 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/17 19:25:01 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,24 @@ static int	load_images(t_mlx_data *mlx, t_game *game)
 
 int	init_mlx_resources(t_game *game, t_mlx_data *mlx)
 {
+	int	map_width;
+	int	map_height;
+
 	mlx->mlx_ptr = mlx_init();
 	if (!mlx->mlx_ptr)
 		return (1);
-	mlx->offset_x = (WIDTH - (game->line_len * mlx->pixel_size)) / 2;
-	mlx->offset_y = (HEIGHT - (game->count_line * mlx->pixel_size)) / 2;
-	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, WIDTH, HEIGHT, "So_Long");
+	map_width = game->line_len * mlx->pixel_size;
+	map_height = game->count_line * mlx->pixel_size;
+	mlx->offset_x = (WIDTH - map_width) / 2;
+	mlx->offset_y = (HEIGHT - map_height - 150) / 2;
+	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, map_width + (mlx->offset_x * 2),
+			map_height + (mlx->offset_y * 2),
+			"So_Long");
 	if (!mlx->win_ptr)
 		return (1);
 	if (load_images(mlx, game))
 	{
-		ft_putstr_fd("Error\nDon't move the xpm files pls\n", 2);
+		ft_putstr_fd("Error: Missing or moved XPM files\n", 2);
 		return (1);
 	}
 	return (0);
@@ -77,9 +84,8 @@ void	put_sprite(t_mlx_data *data, char c, size_t x, size_t y)
 		sprite = collectibles[(x + y) % 3];
 	else
 		return ;
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, sprite,
-		data->offset_x + (x * data->pixel_size),
-		data->offset_y + (y * data->pixel_size));
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, sprite, data->offset_x
+		+ (x * data->pixel_size), data->offset_y + (y * data->pixel_size));
 }
 
 void	render_game(t_game game)

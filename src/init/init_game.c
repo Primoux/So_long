@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 17:00:32 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/17 18:07:51 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/17 19:09:50 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	read_map(t_game *game)
 	size_t	max_width;
 
 	max_height = (HEIGHT - 128) / game->mlx.pixel_size;
-	max_width = (WIDTH + 64) / game->mlx.pixel_size;
+	max_width = (WIDTH) / game->mlx.pixel_size;
 	line = get_next_line(game->fd);
 	while (line != NULL)
 	{
