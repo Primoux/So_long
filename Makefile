@@ -118,7 +118,7 @@ $(OBJ_DIR)%.o: %.c
 	@mkdir -p $(dir $@)
 	$(eval CURRENT_FILE=$(shell echo $$(($(CURRENT_FILE) + 1))))
 	$(call draw_progress_bar)
-	$(CC) $(CFLAGS) $(DEFINE) $(INCLUDES) -MMD -MP -c $< -o $@
+	@$(CC) $(CFLAGS) $(DEFINE) $(INCLUDES) -MMD -MP -c $< -o $@
 	@if [ $(CURRENT_FILE) = $(TOTAL_FILES) ]; then echo; fi
 
 clean:
