@@ -13,12 +13,12 @@ DEFINE  = -D WIDTH=$(WIDTH) -D HEIGHT=$(HEIGHT)
 
 #-------------------------------- DIRECTORIES --------------------------------#
 
-LIBFT_DIR   = src/lib/libft
-LIBMLX_DIR  = src/lib/mlx
-INCLUDE_DIR = src/include
-PARSING_DIR = src/parsing/
-INIT_DIR	= src/init/
-HANDLE_MLX_DIR = src/handle_mlx/
+LIBFT_DIR		= src/lib/libft
+LIBMLX_DIR		= src/lib/mlx
+INCLUDE_DIR		= src/include
+PARSING_DIR		= src/parsing/
+INIT_DIR		= src/init/
+HANDLE_MLX_DIR	= src/handle_mlx/
 
 UTILS_DIR   = src/utils/
 OBJ_DIR	 	= obj/
@@ -48,10 +48,10 @@ HANDLE_MLX_SRCS =	mlx_destroy.c mlx_utils.c movement.c mlx_print_utils.c
 
 UTILS_SRCS		=	aff_map.c
 
-SRCS =	$(addprefix $(PARSING_DIR), $(PARSING_SRCS)) \
-		$(addprefix $(INIT_DIR), $(INIT_SRCS)) \
-		$(addprefix $(HANDLE_MLX_DIR), $(HANDLE_MLX_SRCS)) \
-		$(addprefix $(UTILS_DIR), $(UTILS_SRCS))
+SRCS			=	$(addprefix $(PARSING_DIR), $(PARSING_SRCS)) \
+					$(addprefix $(INIT_DIR), $(INIT_SRCS)) \
+					$(addprefix $(HANDLE_MLX_DIR), $(HANDLE_MLX_SRCS)) \
+					$(addprefix $(UTILS_DIR), $(UTILS_SRCS))
 
 #-------------------------------- OBJECTS --------------------------------------#
 
@@ -60,12 +60,12 @@ DEPENDENCIES	= $(OBJS:.o=.d)
 
 #-------------------------------- PROGRESS BAR --------------------------------#
 
-TOTAL_FILES := $(shell find $(SRCS) -type f -name "*.c" -newer $(NAME) 2>/dev/null | wc -l)
+TOTAL_FILES		:= $(shell find $(SRCS) -type f -name "*.c" -newer $(NAME) 2>/dev/null | wc -l)
 ifeq ($(TOTAL_FILES),0)
 	TOTAL_FILES =	$(words $(SRCS))
 endif
-CURRENT_FILE := 0
-BAR_LENGTH := 50
+CURRENT_FILE	:= 0
+BAR_LENGTH		:= 50
 
 #-------------------------------- COLORS --------------------------------#
 

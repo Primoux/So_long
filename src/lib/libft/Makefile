@@ -7,14 +7,14 @@ RM		= rm -f
 SHELL	= /bin/bash
 
 #-------------------------------- DIRECTORIES --------------------------------#
-INCLUDE_DIR = include
-LIST_DIR	= list/
-CHAR_DIR	= char/
-STRING_DIR  = string/
-IO_DIR		= io/
-MEMORY_DIR  = memory/
-ADVANCE_DIR = advance/
-OBJ_DIR		= obj/
+INCLUDE_DIR 	= include
+LIST_DIR		= list/
+CHAR_DIR		= char/
+STRING_DIR  	= string/
+IO_DIR			= io/
+MEMORY_DIR  	= memory/
+ADVANCE_DIR 	= advance/
+OBJ_DIR			= obj/
 
 #-------------------------------- SOURCE FILES --------------------------------#
 
@@ -44,24 +44,24 @@ MEMORY_SRCS		=	ft_memset.c ft_bzero.c ft_memcpy.c \
 ADVANCE_SRCS	=	ft_atoi.c ft_split.c ft_itoa.c \
 					get_next_line.c ft_printf.c 
 
-SRCS		= $(addprefix $(LIST_DIR), $(LIST_SRCS)) \
-			  $(addprefix $(CHAR_DIR), $(CHAR_SRCS)) \
-			  $(addprefix $(STRING_DIR), $(STRING_SRCS)) \
-			  $(addprefix $(IO_DIR), $(IO_SRCS)) \
-			  $(addprefix $(MEMORY_DIR), $(MEMORY_SRCS)) \
-			  $(addprefix $(ADVANCE_DIR), $(ADVANCE_SRCS))
+SRCS			= $(addprefix $(LIST_DIR), $(LIST_SRCS)) \
+				  $(addprefix $(CHAR_DIR), $(CHAR_SRCS)) \
+				  $(addprefix $(STRING_DIR), $(STRING_SRCS)) \
+				  $(addprefix $(IO_DIR), $(IO_SRCS)) \
+				  $(addprefix $(MEMORY_DIR), $(MEMORY_SRCS)) \
+				  $(addprefix $(ADVANCE_DIR), $(ADVANCE_SRCS))
 
 #-------------------------------- OBJECTS --------------------------------#
 OBJS			= $(patsubst %.c,$(OBJ_DIR)%.o,$(SRCS))
 DEPENDENCIES	= $(OBJS:.o=.d)
 
 #-------------------------------- PROGRESS BAR --------------------------------#
-TOTAL_FILES := $(shell find $(SRCS) -type f -name "*.c" -newer $(NAME) 2>/dev/null | wc -l)
+TOTAL_FILES		:= $(shell find $(SRCS) -type f -name "*.c" -newer $(NAME) 2>/dev/null | wc -l)
 ifeq ($(TOTAL_FILES),0)
 	TOTAL_FILES = $(words $(OBJS))
 endif
-CURRENT_FILE := 0
-BAR_LENGTH   := 50
+CURRENT_FILE	:= 0
+BAR_LENGTH		:= 50
 
 #-------------------------------- COLORS --------------------------------#
 BLACK       := \033[38;2;0;0;0m
@@ -92,6 +92,8 @@ endef
 
 #-------------------------------- RULES --------------------------------#
 
+-include $(DEPENDENCIES)
+
 all: $(NAME)
 
 $(NAME): $(OBJS)
@@ -103,7 +105,7 @@ $(OBJ_DIR)%.o: %.c
 	@mkdir -p $(dir $@)
 	@$(eval CURRENT_FILE=$(shell echo $$(($(CURRENT_FILE) + 1))))
 	$(call draw_progress_bar)
-	@$(CC) -I $(INCLUDE_DIR) $(CFLAGS) -MMD -MP -c $< -o $@
+	@$(CC) $(CFLAGS) -I $(INCLUDE_DIR) -MMD -MP -c $< -o $@
 
 clean:
 	@printf "$(BLUE)Cleaning object files from libft...$(RESET)\n"
@@ -115,11 +117,9 @@ fclean: clean
 	@printf "$(GREEN)Clean complete libft!$(RESET)\n"
 
 re: fclean
-	@$(MAKE) --silent all
-
--include $(DEPENDENCIES)
+	@$(MAKE) all
 
 print-%:
 	@echo $($(patsubst print-%,%,$@))
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re print-
