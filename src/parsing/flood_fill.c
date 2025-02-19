@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:46:13 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/18 18:31:18 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/19 19:01:55 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	check_map_valid(t_game *game)
 
 void	flood_fill(char **map, size_t y, size_t x, t_game *game)
 {
-	if (y < 0 || y >= game->count_line || x < 0 || x >= game->line_len)
+	if (y >= game->count_line || x >= game->line_len)
 		return ;
 	if (map[y][x] == '1' || map[y][x] == 'X')
 		return ;
