@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 17:00:32 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/19 13:45:31 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/19 16:10:59 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ int	create_map(t_game *game)
 		return (1);
 	if (read_map(game) == 1)
 	{
-		ft_putstr_fd("Error\nMap too large for screen resolution(Or malloc fail)\n",
-			2);
+		ft_putstr_fd
+		("Error\nMap too large for screen resolution(Or malloc fail)\n", 2);
 		return (1);
 	}
 	if (check_map_errors(game) == 1)

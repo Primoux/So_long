@@ -104,10 +104,15 @@ all: $(NAME)
 
 $(LIBFT): libft
 
+$(MLX): mlx
+
+mlx :
+	@$(MAKE) --silent -C $(LIBMLX_DIR)
+
 libft:
 	@$(MAKE) --silent -C $(LIBFT_DIR)
 
-$(NAME): $(LIBFT) $(OBJS)
+$(NAME): $(LIBFT) $(MLX) $(OBJS)
 	@printf "$(BLUE)$(BOLD)Linking objects...$(RESET)\n"
 	@$(CC) $(OBJS) -o $(NAME)  $(LIBFT) $(LDFLAGS)
 	@printf "$(GREEN)$(BOLD)Build successful!$(RESET) Created $(BOLD)$(NAME)$(RESET)\n"
@@ -127,6 +132,9 @@ clean:
 	@$(MAKE) --silent -C $(LIBFT_DIR) clean
 
 fclean: 
+	@printf "$(BLUE)Removing library...$(RESET)\n"
+	@$(MAKE) --silent -C $(LIBMLX_DIR) clean
+	@printf "$(GREEN)Clean complete mlx!$(RESET)\n"
 	@printf "$(BLUE)Removing executable from so_long...$(RESET)\n"
 	@rm -f $(NAME)
 	@$(MAKE) --silent -C $(LIBFT_DIR) fclean
@@ -134,12 +142,13 @@ fclean:
 	@rm -rf $(OBJ_DIR)
 	@printf "$(GREEN)Clean complete so_long!$(RESET)\n"
 
--include $(DEPENDENCIES)
 
 re: fclean
 	@$(MAKE) --silent all
 
 print-%:
 	@echo $($(patsubst print-%,%,$@))
+
+-include $(DEPENDENCIES)
 
 .PHONY: all clean fclean re libft print-%

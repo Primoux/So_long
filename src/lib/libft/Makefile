@@ -117,7 +117,7 @@ fclean: clean
 	@printf "$(GREEN)Clean complete libft!$(RESET)\n"
 
 re: fclean
-	@$(MAKE) all
+	@$(MAKE) --silent all
 
 print-%:
 	@echo $($(patsubst print-%,%,$@))
