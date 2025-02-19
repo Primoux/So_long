@@ -107,7 +107,7 @@ $(LIBFT): libft
 $(MLX): mlx
 
 mlx :
-	@$(MAKE) --silent -C $(LIBMLX_DIR)
+	@$(MAKE) --silent -C $(LIBMLX_DIR) 
 
 libft:
 	@$(MAKE) --silent -C $(LIBFT_DIR)
