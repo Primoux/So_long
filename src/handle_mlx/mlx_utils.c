@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 14:05:56 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/17 19:25:01 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/18 18:15:27 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ int	init_mlx_resources(t_game *game, t_mlx_data *mlx)
 	mlx->offset_x = (WIDTH - map_width) / 2;
 	mlx->offset_y = (HEIGHT - map_height - 150) / 2;
 	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, map_width + (mlx->offset_x * 2),
-			map_height + (mlx->offset_y * 2),
-			"So_Long");
+			map_height + (mlx->offset_y * 2), "So_Long");
 	if (!mlx->win_ptr)
 		return (1);
 	if (load_images(mlx, game))

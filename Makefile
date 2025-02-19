@@ -40,7 +40,7 @@ MLX			= $(LIBMLX_DIR)/libmlx.a
 #-------------------------------- SOURCE FILES --------------------------------#
 
 PARSING_SRCS	=	parsing.c check_map.c check_char.c \
-					player_pos.c flood_fill.c check_argv.c
+					find_e_and_p.c flood_fill.c check_argv.c
 
 INIT_SRCS		=	init_game.c init_window.c
 

@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 16:19:48 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/16 17:09:02 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/19 13:36:06 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ typedef struct s_mlx_data
 {
 	void			*mlx_ptr;
 	void			*win_ptr;
-	int				screen_width;
-	int				screen_height;
 	void			*wall;
 	void			*floor;
 	void			*player;
@@ -51,6 +49,8 @@ typedef struct s_mlx_data
 	void			*collect1;
 	void			*collect2;
 	void			*collect3;
+	int				screen_width;
+	int				screen_height;
 	int				offset_x;
 	int				offset_y;
 	size_t			pixel_size;
@@ -70,9 +70,9 @@ typedef struct s_game
 	char			*line;
 	char			*map_path;
 	char			**map;
+	int				fd;
 	size_t			line_len;
 	size_t			count_line;
-	int				fd;
 	size_t			player_x;
 	size_t			player_y;
 	size_t			exit_x;

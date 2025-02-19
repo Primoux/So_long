@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 19:17:51 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/17 19:11:44 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/19 13:45:18 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ static int	process_movement(int keysym, t_game *game)
 	{
 		cleanup_game(game);
 		free_tab(game->map);
-		exit(0);
+		ft_printf("You exit the game whit ESC\n");
+		exit(EXIT_SUCCESS);
 	}
 	else if (keysym == XK_w || keysym == XK_Up)
 		game->player_y--;
@@ -66,7 +67,7 @@ static int	handle_exit_update(t_game *game)
 		cleanup_game(game);
 		free_tab(game->map);
 		ft_putstr_fd("Error\nDon't move the xpm files pls\n", 2);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	return (0);
 }
@@ -91,7 +92,7 @@ int	check_collision(t_game *game, size_t old_x, size_t old_y)
 		cleanup_game(game);
 		free_tab(game->map);
 		ft_printf("You Finished the game in %d moves GG !\n", game->move_count);
-		exit(0);
+		exit(EXIT_SUCCESS);
 	}
 	return (0);
 }

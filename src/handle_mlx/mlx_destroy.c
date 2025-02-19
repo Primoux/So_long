@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 18:04:14 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/16 16:34:06 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/19 13:36:02 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ int	handle_destroy(t_game *game)
 	cleanup_game(game);
 	free_tab(game->map);
 	ft_printf("You exit the game whit the x\n");
-	exit(0);
-	return (0);
+	exit(EXIT_SUCCESS);
 }
 
 void	cleanup_images(t_game *game)
