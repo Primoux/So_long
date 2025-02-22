@@ -6,23 +6,23 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:46:13 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/19 19:01:55 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/22 16:36:21 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "so_long.h"
 
-char	**copy_map(char **map, int height)
+char	**copy_map(char **map, int count_line)
 {
 	char	**copy;
 	int		i;
 
-	copy = malloc(sizeof(char *) * (height + 1));
+	copy = ft_calloc(count_line + 1, sizeof(char *));
 	if (!copy)
 		return (NULL);
 	i = 0;
-	while (i < height)
+	while (i < count_line)
 	{
 		copy[i] = ft_strdup(map[i]);
 		if (!copy[i])
@@ -34,7 +34,7 @@ char	**copy_map(char **map, int height)
 		}
 		i++;
 	}
-	copy[height] = NULL;
+	copy[count_line] = NULL;
 	return (copy);
 }
 
