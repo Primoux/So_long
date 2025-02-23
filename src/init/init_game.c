@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 17:00:32 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/19 17:19:37 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/23 14:01:59 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ int	main(int argc, char **argv)
 	{
 		cleanup_game(&game);
 		free_tab(game.map);
-		exit(EXIT_SUCCESS);
+		exit(EXIT_FAILURE);
 	}
 	init_window(&game);
 	return (0);

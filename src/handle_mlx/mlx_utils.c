@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 14:05:56 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/18 18:15:27 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/23 15:48:48 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,13 @@ int	init_mlx_resources(t_game *game, t_mlx_data *mlx)
 	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, map_width + (mlx->offset_x * 2),
 			map_height + (mlx->offset_y * 2), "So_Long");
 	if (!mlx->win_ptr)
+	{
+		ft_putstr_fd("Error\nWindow ptr failed\n", 2);
 		return (1);
+	}
 	if (load_images(mlx, game))
 	{
-		ft_putstr_fd("Error: Missing or moved XPM files\n", 2);
+		ft_putstr_fd("Error\nMissing or moved XPM files\n", 2);
 		return (1);
 	}
 	return (0);
@@ -87,18 +90,18 @@ void	put_sprite(t_mlx_data *data, char c, size_t x, size_t y)
 		+ (x * data->pixel_size), data->offset_y + (y * data->pixel_size));
 }
 
-void	render_game(t_game game)
+void	render_game(t_game *game)
 {
 	size_t	x;
 	size_t	y;
 
 	y = 0;
-	while (y < game.count_line)
+	while (y < game->count_line)
 	{
 		x = 0;
-		while (x < game.line_len)
+		while (x < game->line_len)
 		{
-			put_sprite(&game.mlx, game.map[y][x], x, y);
+			put_sprite(&game->mlx, game->map[y][x], x, y);
 			x++;
 		}
 		y++;

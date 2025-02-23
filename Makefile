@@ -1,36 +1,35 @@
 #-------------------------------- VARIABLES --------------------------------#
 
-NAME		= so_long
-CC		 	= cc
-CFLAGS		= -Wall -Wextra -Werror
-SHELL 		= /bin/bash
+NAME		=	so_long
+CC		 	=	cc
+CFLAGS		=	-Wall -Wextra -Werror
+SHELL 		=	/bin/bash
 
 #-------------------------------- DEFINE ----------------------------------#
 
-WIDTH   = $(shell xrandr | grep current | awk '{print $$8}')
-HEIGHT  = $(shell xrandr | grep current | awk '{print $$10}' | sed --expression s/,/''/)
-DEFINE  = -D WIDTH=$(WIDTH) -D HEIGHT=$(HEIGHT)
+WIDTH   =	$(shell xrandr | grep current | awk '{print $$8}')
+HEIGHT  =	$(shell xrandr | grep current | awk '{print $$10}' | sed --expression s/,/''/)
+DEFINE  =	-D WIDTH=$(WIDTH) -D HEIGHT=$(HEIGHT)
 
 #-------------------------------- DIRECTORIES --------------------------------#
 
-LIBFT_DIR		= src/lib/libft
-LIBMLX_DIR		= src/lib/mlx
-INCLUDE_DIR		= src/include
-PARSING_DIR		= src/parsing/
-INIT_DIR		= src/init/
-HANDLE_MLX_DIR	= src/handle_mlx/
-
-UTILS_DIR   = src/utils/
-OBJ_DIR	 	= obj/
+LIBFT_DIR		=	src/lib/libft
+LIBMLX_DIR		=	src/lib/mlx
+INCLUDE_DIR		=	src/include
+PARSING_DIR		=	src/parsing/
+INIT_DIR		=	src/init/
+HANDLE_MLX_DIR	=	src/handle_mlx/
+UTILS_DIR		=	src/utils/
+OBJ_DIR			=	obj/
 
 #-------------------------------- INCLUDES & FLAGS --------------------------------#
 
-INCLUDES    = -I $(INCLUDE_DIR) \
-			  -I ./src/lib/libft/include \
-			  -I $(LIBMLX_DIR)
+INCLUDES	=	-I $(INCLUDE_DIR) \
+				-I ./src/lib/libft/include \
+				-I $(LIBMLX_DIR)
 
-LDFLAGS		= -L$(LIBMLX_DIR) -lmlx \
-			  -lXext -lX11 -lm
+LDFLAGS		=	-L$(LIBMLX_DIR) -lmlx \
+				-lXext -lX11 -lm
 
 #-------------------------------- LIBRARIES --------------------------------#
 
@@ -44,7 +43,7 @@ PARSING_SRCS	=	parsing.c check_map.c check_char.c \
 
 INIT_SRCS		=	init_game.c init_window.c
 
-HANDLE_MLX_SRCS =	mlx_destroy.c mlx_utils.c movement.c mlx_print_utils.c
+HANDLE_MLX_SRCS	=	mlx_destroy.c mlx_utils.c movement.c mlx_print_utils.c
 
 UTILS_SRCS		=	aff_map.c
 
@@ -55,33 +54,33 @@ SRCS			=	$(addprefix $(PARSING_DIR), $(PARSING_SRCS)) \
 
 #-------------------------------- OBJECTS --------------------------------------#
 
-OBJS			= $(patsubst %.c,$(OBJ_DIR)%.o,$(SRCS))
-DEPENDENCIES	= $(OBJS:.o=.d)
+OBJS			=	$(patsubst %.c,$(OBJ_DIR)%.o,$(SRCS))
+DEPENDENCIES	=	$(OBJS:.o=.d)
 
 #-------------------------------- PROGRESS BAR --------------------------------#
 
-TOTAL_FILES		:= $(shell find $(SRCS) -type f -name "*.c" -newer $(NAME) 2>/dev/null | wc -l)
+TOTAL_FILES		:=	$(shell find $(SRCS) -type f -name "*.c" -newer $(NAME) 2>/dev/null | wc -l)
 ifeq ($(TOTAL_FILES),0)
 	TOTAL_FILES =	$(words $(SRCS))
 endif
-CURRENT_FILE	:= 0
-BAR_LENGTH		:= 50
+CURRENT_FILE	:=	0
+BAR_LENGTH		:=	50
 
 #-------------------------------- COLORS --------------------------------#
 
 # Define colors and style
-BLACK       := \033[38;2;0;0;0m
-RED         := \033[38;2;220;20;60m
-GREEN       := \033[38;2;46;139;87m
-BLUE        := \033[38;2;30;144;255m
-YELLOW      := \033[38;2;255;215;0m
-MAGENTA     := \033[38;2;186;85;211m
-CYAN        := \033[38;2;0;206;209m
-WHITE       := \033[38;2;255;255;255m
-ORANGE      := \033[38;2;255;140;0m
-PURPLE      := \033[38;2;147;112;219m
-RESET       := \033[0m
-BOLD        := \033[1m
+BLACK		:=	\033[38;2;0;0;0m
+RED			:=	\033[38;2;220;20;60m
+GREEN		:=	\033[38;2;46;139;87m
+BLUE		:=	\033[38;2;30;144;255m
+YELLOW		:=	\033[38;2;255;215;0m
+MAGENTA		:=	\033[38;2;186;85;211m
+CYAN		:=	\033[38;2;0;206;209m
+WHITE		:=	\033[38;2;255;255;255m
+ORANGE		:=	\033[38;2;255;140;0m
+PURPLE		:=	\033[38;2;147;112;219m
+RESET		:=	\033[0m
+BOLD		:=	\033[1m
 
 # Simplified progress bar function
 define draw_progress_bar
@@ -131,13 +130,13 @@ clean:
 	@rm -rf $(OBJ_DIR)
 	@$(MAKE) --silent -C $(LIBFT_DIR) clean
 
-fclean: 
-	@printf "$(BLUE)Removing library...$(RESET)\n"
+fclean:
+	@printf "$(BLUE)Removing library mlx...$(RESET)\n"
 	@$(MAKE) --silent -C $(LIBMLX_DIR) clean
 	@printf "$(GREEN)Clean complete mlx!$(RESET)\n"
+	@$(MAKE) --silent -C $(LIBFT_DIR) fclean
 	@printf "$(BLUE)Removing executable from so_long...$(RESET)\n"
 	@rm -f $(NAME)
-	@$(MAKE) --silent -C $(LIBFT_DIR) fclean
 	@printf "$(BLUE)Cleaning object files from so_long...$(RESET)\n"
 	@rm -rf $(OBJ_DIR)
 	@printf "$(GREEN)Clean complete so_long!$(RESET)\n"

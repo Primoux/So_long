@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 16:19:48 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/19 13:36:06 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/23 15:51:47 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void				flood_fill(char **map, size_t y, size_t x, t_game *game);
 int					init_window(t_game *game);
 void				aff_map(char **map);
 void				put_sprite(t_mlx_data *data, char c, size_t x, size_t y);
-void				render_game(t_game game);
+void				render_game(t_game *game);
 int					init_mlx_resources(t_game *game, t_mlx_data *mlx);
 int					put_on_screen(t_game *game);
 

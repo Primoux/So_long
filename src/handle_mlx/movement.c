@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 19:17:51 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/19 13:45:18 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/23 15:51:56 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,6 @@ void	update_player_pos(t_game *game, size_t old_x, size_t old_y)
 	game->map[game->player_y][game->player_x] = 'P';
 	put_sprite(&game->mlx, 'P', game->player_x * game->mlx.pixel_size,
 		game->player_y * game->mlx.pixel_size);
-	render_game(*game);
+	render_game(game);
 	put_on_screen(game);
 }

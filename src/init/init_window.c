@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 16:35:41 by enchevri          #+#    #+#             */
-/*   Updated: 2025/02/19 13:44:55 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/02/23 15:51:05 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	init_window(t_game *game)
 		exit(EXIT_FAILURE);
 	}
 	find_exit_pos(game);
-	render_game(*game);
+	render_game(game);
 	mlx_hook(game->mlx.win_ptr, 2, 1L << 0, handle_input, game);
 	mlx_hook(game->mlx.win_ptr, DestroyNotify, StructureNotifyMask,
 		handle_destroy, game);
