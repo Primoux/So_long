@@ -92,8 +92,6 @@ endef
 
 #-------------------------------- RULES --------------------------------#
 
--include $(DEPENDENCIES)
-
 all: $(NAME)
 
 $(NAME): $(OBJS)
@@ -121,5 +119,7 @@ re: fclean
 
 print-%:
 	@echo $($(patsubst print-%,%,$@))
+
+-include $(DEPENDENCIES)
 
 .PHONY: all clean fclean re print-
